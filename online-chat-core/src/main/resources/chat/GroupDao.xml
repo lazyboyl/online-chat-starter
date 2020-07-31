@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.github.lazyboyl.chat.core.dao.GroupDao">
+  <resultMap id="BaseResultMap" type="com.github.lazyboyl.chat.core.entity.Group">
+    <!--
+      WARNING - @mbg.generated
+    -->
+    <id column="groupId" jdbcType="VARCHAR" property="groupId" />
+    <result column="groupName" jdbcType="VARCHAR" property="groupName" />
+    <result column="groupImg" jdbcType="VARCHAR" property="groupImg" />
+    <result column="crtDate" jdbcType="DATE" property="crtDate" />
+    <result column="crtUserId" jdbcType="VARCHAR" property="crtUserId" />
+  </resultMap>
+</mapper>

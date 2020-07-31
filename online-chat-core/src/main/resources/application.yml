@@ -1,0 +1,8 @@
+
+websocket:
+  port: 8399
+  action: chat
+  thread:
+    boss: 12
+    work: 12
+

@@ -1,0 +1,90 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE generatorConfiguration
+        PUBLIC "-//mybatis.org//DTD MyBatis Generator Configuration 1.0//EN"
+        "http://mybatis.org/dtd/mybatis-generator-config_1_0.dtd">
+<generatorConfiguration>
+
+    <context id="Mysql" targetRuntime="MyBatis3Simple" defaultModelType="flat">
+        <property name="beginningDelimiter" value="`"/>
+        <property name="endingDelimiter" value="`"/>
+
+        <plugin type="tk.mybatis.mapper.generator.MapperPlugin">
+            <property name="mappers" value="tk.mybatis.mapper.common.Mapper"/>
+            <!-- 是否区分大小写，默认值 false -->
+            <property name="caseSensitive" value="true"/>
+            <!-- 是否强制生成注解，默认 false，如果设置为 true，不管数据库名和字段名是否一致，都会生成注解（包含 @Table 和 @Column） -->
+            <property name="forceAnnotation" value="true"/>
+        </plugin>
+
+        <jdbcConnection driverClass="com.mysql.jdbc.Driver"
+                        connectionURL="jdbc:mysql://47.105.71.151:3306/online-chat?characterEncoding=utf-8"
+                        userId="root"
+                        password="575088Wl">
+        </jdbcConnection>
+
+        <javaModelGenerator targetPackage="com.github.lazyboyl.chat.core.entity" targetProject="src/main/java">
+
+        </javaModelGenerator>
+
+        <sqlMapGenerator targetPackage="chat" targetProject="src/main/resources" />
+
+        <javaClientGenerator targetPackage="com.github.lazyboyl.chat.core.dao" targetProject="src/main/java"  type="XMLMAPPER"/>
+
+        <table tableName="c_receive_message" domainObjectName="ReceiveMessage" mapperName="ReceiveMessageDao">
+            <!-- 字段属性是否驼峰展示，true为驼峰展示 -->
+            <property name="useActualColumnNames" value="true"></property>
+            <generatedKey column="receiveMessageId" sqlStatement="JDBC"/>
+        </table>
+
+        <table tableName="c_group_member" domainObjectName="GroupMember" mapperName="GroupMemberDao">
+            <!-- 字段属性是否驼峰展示，true为驼峰展示 -->
+            <property name="useActualColumnNames" value="true"></property>
+            <generatedKey column="groupMemberId" sqlStatement="JDBC"/>
+        </table>
+
+        <table tableName="c_group" domainObjectName="Group" mapperName="GroupDao">
+            <!-- 字段属性是否驼峰展示，true为驼峰展示 -->
+            <property name="useActualColumnNames" value="true"></property>
+            <generatedKey column="groupId" sqlStatement="JDBC"/>
+        </table>
+
+        <table tableName="c_chat_user" domainObjectName="ChatUser" mapperName="ChatUserDao">
+            <!-- 字段属性是否驼峰展示，true为驼峰展示 -->
+            <property name="useActualColumnNames" value="true"></property>
+            <generatedKey column="userId" sqlStatement="JDBC"/>
+        </table>
+
+        <table tableName="c_chat_message" domainObjectName="ChatMessage" mapperName="ChatMessageDao">
+            <!-- 字段属性是否驼峰展示，true为驼峰展示 -->
+            <property name="useActualColumnNames" value="true"></property>
+            <generatedKey column="chatMessageId" sqlStatement="JDBC"/>
+        </table>
+
+        <table tableName="c_apply_friend" domainObjectName="ApplyFriend" mapperName="ApplyFriendDao">
+            <!-- 字段属性是否驼峰展示，true为驼峰展示 -->
+            <property name="useActualColumnNames" value="true"></property>
+            <generatedKey column="applyFriendId" sqlStatement="JDBC"/>
+        </table>
+
+        <table tableName="c_friend_list" domainObjectName="FriendList" mapperName="FriendListDao">
+            <!-- 字段属性是否驼峰展示，true为驼峰展示 -->
+            <property name="useActualColumnNames" value="true"></property>
+            <generatedKey column="friendListId" sqlStatement="JDBC"/>
+        </table>
+
+        <table tableName="c_friend_group" domainObjectName="FriendGroup" mapperName="FriendGroupDao">
+            <!-- 字段属性是否驼峰展示，true为驼峰展示 -->
+            <property name="useActualColumnNames" value="true"></property>
+            <generatedKey column="friendGroupId" sqlStatement="JDBC"/>
+        </table>
+
+        <table tableName="c_apply_group" domainObjectName="ApplyGroup" mapperName="ApplyGroupDao">
+            <!-- 字段属性是否驼峰展示，true为驼峰展示 -->
+            <property name="useActualColumnNames" value="true"></property>
+            <generatedKey column="applyGroupId" sqlStatement="JDBC"/>
+        </table>
+
+
+
+    </context>
+</generatorConfiguration>

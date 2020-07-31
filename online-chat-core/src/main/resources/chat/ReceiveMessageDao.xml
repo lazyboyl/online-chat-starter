@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.github.lazyboyl.chat.core.dao.ReceiveMessageDao">
+  <resultMap id="BaseResultMap" type="com.github.lazyboyl.chat.core.entity.ReceiveMessage">
+    <!--
+      WARNING - @mbg.generated
+    -->
+    <id column="receiveMessageId" jdbcType="VARCHAR" property="receiveMessageId" />
+    <result column="chatMessageId" jdbcType="VARCHAR" property="chatMessageId" />
+    <result column="sendUserId" jdbcType="VARCHAR" property="sendUserId" />
+    <result column="receiveUserId" jdbcType="VARCHAR" property="receiveUserId" />
+    <result column="receiveDate" jdbcType="DATE" property="receiveDate" />
+    <result column="readDate" jdbcType="DATE" property="readDate" />
+    <result column="msgState" jdbcType="CHAR" property="msgState" />
+    <result column="groupId" jdbcType="VARCHAR" property="groupId" />
+  </resultMap>
+</mapper>

@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.github.lazyboyl.chat.core.dao.ApplyFriendDao">
+  <resultMap id="BaseResultMap" type="com.github.lazyboyl.chat.core.entity.ApplyFriend">
+    <id column="applyFriendId" jdbcType="VARCHAR" property="applyFriendId" />
+    <result column="applyUserId" jdbcType="VARCHAR" property="applyUserId" />
+    <result column="applyNickName" jdbcType="VARCHAR" property="applyNickName" />
+    <result column="targetUserId" jdbcType="VARCHAR" property="targetUserId" />
+    <result column="note" jdbcType="VARCHAR" property="note" />
+    <result column="applyDate" jdbcType="DATE" property="applyDate" />
+    <result column="applyState" jdbcType="CHAR" property="applyState" />
+    <result column="verifyDate" jdbcType="DATE" property="verifyDate" />
+    <result column="applyType" jdbcType="CHAR" property="applyType" />
+  </resultMap>
+</mapper>

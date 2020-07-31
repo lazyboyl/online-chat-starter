@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.github.lazyboyl.chat.core.dao.ChatUserDao">
+  <resultMap id="BaseResultMap" type="com.github.lazyboyl.chat.core.entity.ChatUser">
+    <!--
+      WARNING - @mbg.generated
+    -->
+    <id column="userId" jdbcType="VARCHAR" property="userId" />
+    <result column="nickName" jdbcType="VARCHAR" property="nickName" />
+    <result column="userName" jdbcType="VARCHAR" property="userName" />
+    <result column="userState" jdbcType="CHAR" property="userState" />
+    <result column="crtDate" jdbcType="DATE" property="crtDate" />
+    <result column="syncUserId" jdbcType="VARCHAR" property="syncUserId" />
+    <result column="userNo" jdbcType="VARCHAR" property="userNo" />
+  </resultMap>
+</mapper>
