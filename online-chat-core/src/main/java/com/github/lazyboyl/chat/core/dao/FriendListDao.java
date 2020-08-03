@@ -1,6 +1,6 @@
 package com.github.lazyboyl.chat.core.dao;
 
-import com.github.lazyboyl.chat.core.entity.FriendList;
+import com.github.lazyboyl.chat.core.entity.Friend;
 import tk.mybatis.mapper.common.Mapper;
 
 /**
@@ -8,5 +8,5 @@ import tk.mybatis.mapper.common.Mapper;
  * @since 2020-07-19
  * 类描述：
  */
-public interface FriendListDao extends Mapper<FriendList> {
+public interface FriendListDao extends Mapper<Friend> {
 }

@@ -58,6 +58,12 @@ public class ChatUser {
     private String userNo;
 
     /**
+     * 用户头像地址
+     */
+    @Column(name = "avatar")
+    private String avatar;
+
+    /**
      * 获取用户流水ID
      *
      * @return userId - 用户流水ID
@@ -181,5 +187,13 @@ public class ChatUser {
      */
     public void setUserNo(String userNo) {
         this.userNo = userNo;
+    }
+
+    public String getAvatar() {
+        return avatar;
+    }
+
+    public void setAvatar(String avatar) {
+        this.avatar = avatar;
     }
 }

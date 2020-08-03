@@ -66,10 +66,10 @@
             <generatedKey column="applyFriendId" sqlStatement="JDBC"/>
         </table>
 
-        <table tableName="c_friend_list" domainObjectName="FriendList" mapperName="FriendListDao">
+        <table tableName="c_friend" domainObjectName="Friend" mapperName="FriendListDao">
             <!-- 字段属性是否驼峰展示，true为驼峰展示 -->
             <property name="useActualColumnNames" value="true"></property>
-            <generatedKey column="friendListId" sqlStatement="JDBC"/>
+            <generatedKey column="friendId" sqlStatement="JDBC"/>
         </table>
 
         <table tableName="c_friend_group" domainObjectName="FriendGroup" mapperName="FriendGroupDao">

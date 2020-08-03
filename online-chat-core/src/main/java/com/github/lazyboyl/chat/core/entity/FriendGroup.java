@@ -50,13 +50,13 @@ public class FriendGroup {
      * 好友分组中的好友列表的数据
      */
     @Transient
-    private List<FriendList> friendLists;
+    private List<Friend> friendLists;
 
-    public List<FriendList> getFriendLists() {
+    public List<Friend> getFriendLists() {
         return friendLists;
     }
 
-    public void setFriendLists(List<FriendList> friendLists) {
+    public void setFriendLists(List<Friend> friendLists) {
         this.friendLists = friendLists;
     }
 

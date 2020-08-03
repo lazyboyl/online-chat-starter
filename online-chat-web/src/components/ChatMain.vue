@@ -1,9 +1,36 @@
 <template>
   <div class="layout">
     <Layout>
-      <Sider hide-trigger :style="{background: '#fff'}" width="250">
+      <Sider hide-trigger :style="{background: '#fff'}" width="260" >
         <Tabs style="min-height: 300px;">
-          <TabPane label="消息" icon="logo-apple">标签一的内容</TabPane>
+          <TabPane label="消息" icon="logo-apple">
+            <List size="small" >
+              <ListItem >
+                <ListItemMeta avatar="https://dev-file.iviewui.com/userinfoPDvn9gKWYihR24SpgC319vXY8qniCqj4/avatar" title="spring爱好交流群" description="技术大神在吗？" />
+                <template slot="extra">
+                  <div style="display: inline-block;">10:20</div>
+                  <Badge :count="3" type="normal">
+                  </Badge>
+                </template>
+              </ListItem>
+              <ListItem>
+                <ListItemMeta avatar="https://dev-file.iviewui.com/userinfoPDvn9gKWYihR24SpgC319vXY8qniCqj4/avatar" title="决战MAN" description="无聊死了" />
+                <template slot="extra">
+                  <div style="display: inline-block;">16:20</div>
+                  <Badge :count="3" type="normal">
+                  </Badge>
+                </template>
+              </ListItem>
+              <ListItem>
+                <ListItemMeta avatar="https://dev-file.iviewui.com/userinfoPDvn9gKWYihR24SpgC319vXY8qniCqj4/avatar" title="大伟哥" description="快来玩LOL" />
+                <template slot="extra">
+                  <div style="display: inline-block;">20:20</div>
+                  <Badge :count="3" type="normal">
+                  </Badge>
+                </template>
+              </ListItem>
+            </List>
+          </TabPane>
           <TabPane label="联系人" icon="logo-windows">
             <div>
               <Button type="text" size="small">好友</Button>
@@ -16,84 +43,42 @@
           </TabPane>
         </Tabs>
       </Sider>
-      <Tabs style="width: 50%;">
+      <Tabs style="width:100%;" closable type="card">
         <TabPane label="老三" icon="logo-apple">
           <Layout>
             <Content style="margin-left: 20px;">
               <Scroll>
                 <List>
-                  <li data-v-609bc0e1="" class="ivu-list-item" >
-                    <div data-v-609bc0e1="" class="ivu-list-item-meta">
-                      <div class="ivu-list-item-meta-avatar"><span
-                        class="ivu-avatar ivu-avatar-circle ivu-avatar-image ivu-avatar-default"><img
-                        src="https://dev-file.iviewui.com/userinfoPDvn9gKWYihR24SpgC319vXY8qniCqj4/avatar"></span></div>
-                      <div class="ivu-list-item-meta-content" >
-                        <div class="ivu-list-item-meta-title" style="text-align: center;">2020/08/08 22:10:30</div>
-                        <div class="ivu-list-item-meta-description" style="text-align: justify;">你好啊，在做什么呢？</div>
-                      </div>
-                    </div> <!---->
-                    <div class="ivu-list-item-extra"></div>
+                  <li style="text-align: center;">
+                    <a href="javascript:void(0)">查看更多消息</a>
                   </li>
-                  <li data-v-609bc0e1="" class="ivu-list-item" >
-                    <div data-v-609bc0e1="" class="ivu-list-item-meta">
-                      <div class="ivu-list-item-meta-avatar"><span
-                        class="ivu-avatar ivu-avatar-circle ivu-avatar-image ivu-avatar-default"><img
-                        src="https://dev-file.iviewui.com/userinfoPDvn9gKWYihR24SpgC319vXY8qniCqj4/avatar"></span></div>
-                      <div class="ivu-list-item-meta-content" >
-                        <div class="ivu-list-item-meta-title" style="text-align: center;">2020/08/08 22:15:30</div>
-                        <div class="ivu-list-item-meta-description" style="text-align: justify;">
-                          <div class="ivu-tooltip-dark"  x-placement="right-end">
-                            <div class="ivu-tooltip-content">
-                              <div class="ivu-tooltip-arrow"></div>
-                              <div class="ivu-tooltip-inner ivu-tooltip-inner-with-width" >咋不回复我呢？咋不回复我呢？咋不回复我呢？咋不回复我呢？咋不回复我呢？咋不回复我呢？咋不回复我呢？咋不回复我呢？咋不回复我呢？咋不回复我呢？咋不回复我呢？咋不回复我呢？咋不回复我呢？咋不回复我呢？咋不回复我呢？咋不回复我呢？咋不回复我呢？咋不回复我呢？</div>
-                            </div>
-                          </div>
-                        </div>
-                      </div>
-                    </div> <!---->
-                    <div class="ivu-list-item-extra"></div>
-                  </li>
-                  <li data-v-609bc0e1="" class="ivu-list-item" >
-                    <div data-v-609bc0e1="" class="ivu-list-item-meta">
-                      <div class="ivu-list-item-meta-content" >
-                        <div class="ivu-list-item-meta-title" style="text-align: center;">2020/08/08 22:19:30</div>
-                        <div class="ivu-list-item-meta-description" style="text-align: right;">
-                          <div style="text-align: left;display: inline-block;">在的呢！</div>
-                        </div>
-                      </div>
-                      <div class="ivu-list-item-meta-avatar"><span
-                        class="ivu-avatar ivu-avatar-circle ivu-avatar-image ivu-avatar-default"><img
-                        src="https://dev-file.iviewui.com/userinfoPDvn9gKWYihR24SpgC319vXY8qniCqj4/avatar"></span></div>
-                    </div> <!---->
-                    <div class="ivu-list-item-extra"></div>
-                  </li>
-                  <li data-v-609bc0e1="" class="ivu-list-item" >
-                    <div data-v-609bc0e1="" class="ivu-list-item-meta">
-                      <div class="ivu-list-item-meta-content" >
-                        <div class="ivu-list-item-meta-title" style="text-align: center;">2020/08/08 22:19:31</div>
-                        <div class="ivu-list-item-meta-description" style="text-align: right;">
-                          <div style="text-align: left;display: inline-block;">
-                            <div class="ivu-tooltip-dark"  x-placement="right-end" style="background-color: teal;">
-                              <div class="ivu-tooltip-content">
-                                <div class="ivu-tooltip-arrow"></div>
-                                <div class="ivu-tooltip-inner ivu-tooltip-inner-with-width" >在的呢！你在做什么呢？在的呢！你在做什么呢？在的呢！你在做什么呢？在的呢！你在做什么呢？在的呢！你在做什么呢？在的呢！你在做什么呢？在的呢！你在做什么呢？在的呢！你在做什么呢？在的呢！你在做什么呢？在的呢！你在做什么呢？在的呢！你在做什么呢？在的呢！你在做什么呢？在的呢！你在做什么呢？在的呢！你在做什么呢？在的呢！你在做什么呢？在的呢！你在做什么呢？在的呢！你在做什么呢？</div>
-                              </div>
-                            </div>
-                          </div>
-                        </div>
-                      </div>
-                      <div class="ivu-list-item-meta-avatar"><span
-                        class="ivu-avatar ivu-avatar-circle ivu-avatar-image ivu-avatar-default"><img
-                        src="https://dev-file.iviewui.com/userinfoPDvn9gKWYihR24SpgC319vXY8qniCqj4/avatar"></span></div>
-                    </div> <!---->
-                    <div class="ivu-list-item-extra"></div>
-                  </li>
+                  <ChatListItem
+                    avatar="https://dev-file.iviewui.com/userinfoPDvn9gKWYihR24SpgC319vXY8qniCqj4/avatar"
+                    talkDate="2020/08/08 22:10:30"
+                    talkContent="你好啊，在做什么呢？"></ChatListItem>
+                  <ChatListItem
+                    avatar="https://dev-file.iviewui.com/userinfoPDvn9gKWYihR24SpgC319vXY8qniCqj4/avatar"
+                    talkDate="2020/08/08 22:15:30"
+                    talkContent="咋不回复我呢？咋不回复我呢？咋不回复我呢？咋不回复我呢？咋不回复我呢？咋不回复我呢？咋不回复我呢？咋不回复我呢？咋不回复我呢？咋不回复我呢？咋不回复我呢？咋不回复我呢？咋不回复我呢？咋不回复我呢？咋不回复我呢？咋不回复我呢？咋不回复我呢？咋不回复我呢？"></ChatListItem>
+                  <ChatListItem
+                    avatar="https://dev-file.iviewui.com/userinfoPDvn9gKWYihR24SpgC319vXY8qniCqj4/avatar"
+                    talkDate="2020/08/08 22:19:30"
+                    talkContent="在的呢！"
+                    talkSide></ChatListItem>
+                  <ChatListItem
+                    avatar="https://dev-file.iviewui.com/userinfoPDvn9gKWYihR24SpgC319vXY8qniCqj4/avatar"
+                    talkDate="2020/08/08 2020/08/08 22:19:31"
+                    talkContent="在的呢！你在做什么呢？在的呢！你在做什么呢？在的呢！你在做什么呢？在的呢！你在做什么呢？在的呢！你在做什么呢？在的呢！你在做什么呢？在的呢！你在做什么呢？在的呢！你在做什么呢？在的呢！你在做什么呢？在的呢！你在做什么呢？在的呢！你在做什么呢？在的呢！你在做什么呢？在的呢！你在做什么呢？在的呢！你在做什么呢？在的呢！你在做什么呢？在的呢！你在做什么呢？在的呢！你在做什么呢？"
+                    talkSide></ChatListItem>
                 </List>
               </Scroll>
             </Content>
-            <Footer style="height: 120px;">
+            <div>
               <Input style="width: 100%;" type="textarea" :rows="4" placeholder="请输入聊天消息"/>
-            </Footer>
+            </div>
+            <div style="background-color: white;">
+              <Button style="background-color: rgba(70,76,91,.9);color: white;float: right;margin-top: 10px;margin-right: 10px;margin-bottom: 10px;">发送</Button>
+            </div>
           </Layout>
         </TabPane>
         <TabPane label="啊勋" icon="logo-windows">标签二的内容</TabPane>
@@ -104,8 +89,10 @@
 </template>
 
 <script>
+import ChatListItem from '@/components/chatList/ChatListItem'
 export default {
   name: 'chatMain',
+  components: {ChatListItem},
   data () {
     return {
       friendData: [

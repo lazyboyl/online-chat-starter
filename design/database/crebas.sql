@@ -1,18 +1,20 @@
 /*==============================================================*/
 /* DBMS name:      MySQL 5.0                                    */
-/* Created on:     2020/7/29 17:11:35                           */
+/* Created on:     2020/8/3 17:11:39                            */
 /*==============================================================*/
 
 
 drop table if exists c_apply_friend;
 
+drop table if exists c_apply_group;
+
 drop table if exists c_chat_message;
 
 drop table if exists c_chat_user;
 
-drop table if exists c_friend_group;
+drop table if exists c_friend;
 
-drop table if exists c_friend_list;
+drop table if exists c_friend_group;
 
 drop table if exists c_group;
 
@@ -38,6 +40,24 @@ create table c_apply_friend
 );
 
 /*==============================================================*/
+/* Table: c_apply_group                                         */
+/*==============================================================*/
+create table c_apply_group
+(
+   applyGroupId         varchar(32) not null comment '流水ID',
+   applyUserId          varchar(32) comment '申请人流水ID',
+   applyNickName        varchar(100) comment '申请人名称',
+   targetUserId         varchar(32) comment '接收人ID',
+   note                 varchar(100) comment '申请信息',
+   applyDate            date comment '申请时间',
+   applyState           char(1) comment '申请状态【0：拒绝；1：待通过；2：过期；9：通过】',
+   verifyDate           date comment '审核时间',
+   applyType            char(1) comment '申请类型【1：邀请入群；2：申请入群；】',
+   groupId              varchar(32) comment '群流水ID',
+   primary key (applyGroupId)
+);
+
+/*==============================================================*/
 /* Table: c_chat_message                                        */
 /*==============================================================*/
 create table c_chat_message
@@ -47,6 +67,7 @@ create table c_chat_message
    crtUserId            varchar(32) comment '创建人流水ID',
    crtUserName          varchar(200) comment '创建人名称',
    crtDate              date comment '创建时间',
+   messageType          char(1) comment '消息类型【1：双人聊天；2：群组聊天】',
    primary key (chatMessageId)
 );
 
@@ -62,7 +83,24 @@ create table c_chat_user
    crtDate              date comment '创建时间',
    syncUserId           varchar(32) comment '同步系统流水ID',
    userNo               varchar(20) comment '用户编号',
+   avatar               varchar(200) comment '用户头像地址',
    primary key (userId)
+);
+
+/*==============================================================*/
+/* Table: c_friend                                              */
+/*==============================================================*/
+create table c_friend
+(
+   friendId             varchar(32) not null comment '好友列表流水ID',
+   userId               varchar(32) comment '好友ID',
+   belowUserId          varchar(32) comment '所属用户ID',
+   friendState          char(1) comment '好友状态【0：已下线；9：已上线】',
+   nickName             varchar(200) comment '用户昵称',
+   remarks              varchar(200) comment '备注',
+   friendGroupId        varchar(32) comment '分组所属ID',
+   avatar               varchar(200) comment '用户头像地址',
+   primary key (friendId)
 );
 
 /*==============================================================*/
@@ -76,21 +114,6 @@ create table c_friend_group
    friendGroupOrder     int comment '分组排序',
    allowDeletion        char(1) comment '是否允许删除【0：允许删除；9：不允许删除】',
    primary key (friendGroupId)
-);
-
-/*==============================================================*/
-/* Table: c_friend_list                                         */
-/*==============================================================*/
-create table c_friend_list
-(
-   friendListId         varchar(32) not null comment '好友列表流水ID',
-   userId               varchar(32) comment '好友ID',
-   belowUserId          varchar(32) comment '所属用户ID',
-   friendState          char(1) comment '好友状态【0：已下线；9：已上线】',
-   nickName             varchar(200) comment '用户昵称',
-   remarks              varchar(200) comment '备注',
-   friendGroupId        varchar(32) comment '分组所属ID',
-   primary key (friendListId)
 );
 
 /*==============================================================*/
@@ -115,6 +138,9 @@ create table c_group_member
    groupId              varchar(32) comment '群流水ID',
    userId               varchar(32) comment '成员流水ID',
    joinDate             date comment '加入时间',
+   nickName             varchar(200) comment '用户昵称',
+   remarks              varchar(200) comment '备注',
+   avatar               varchar(200) comment '用户头像地址',
    primary key (groupMemberId)
 );
 

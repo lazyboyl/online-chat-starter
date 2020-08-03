@@ -4,6 +4,7 @@ import com.github.lazyboyl.chat.core.config.UuidGenId;
 import tk.mybatis.mapper.annotation.KeySql;
 
 import java.util.Date;
+import java.util.List;
 import javax.persistence.*;
 
 /**
@@ -46,6 +47,12 @@ public class Group {
     private String crtUserId;
 
     /**
+     * 群组底下的成员列表
+     */
+    @Transient
+    private List<GroupMember> groupMemberList;
+
+  /**
      * 获取群组流水ID
      *
      * @return groupId - 群组流水ID
@@ -133,5 +140,13 @@ public class Group {
      */
     public void setCrtUserId(String crtUserId) {
         this.crtUserId = crtUserId;
+    }
+
+    public List<GroupMember> getGroupMemberList() {
+        return groupMemberList;
+    }
+
+    public void setGroupMemberList(List<GroupMember> groupMemberList) {
+        this.groupMemberList = groupMemberList;
     }
 }

@@ -10,15 +10,15 @@ import javax.persistence.*;
  * @since 2020-07-19
  * 类描述： 好友实体类
  */
-@Table(name = "c_friend_list")
-public class FriendList {
+@Table(name = "c_friend")
+public class Friend {
     /**
      * 好友列表流水ID
      */
     @Id
-    @Column(name = "friendListId")
+    @Column(name = "friendId")
     @KeySql(genId = UuidGenId.class)
-    private String friendListId;
+    private String friendId;
 
     /**
      * 好友ID
@@ -56,23 +56,19 @@ public class FriendList {
     @Column(name = "friendGroupId")
     private String friendGroupId;
 
-
     /**
-     * 获取好友列表流水ID
-     *
-     * @return friendListId - 好友列表流水ID
+     * 用户头像地址
      */
-    public String getFriendListId() {
-        return friendListId;
+    @Column(name = "avatar")
+    private String avatar;
+
+
+    public String getFriendId() {
+        return friendId;
     }
 
-    /**
-     * 设置好友列表流水ID
-     *
-     * @param friendListId 好友列表流水ID
-     */
-    public void setFriendListId(String friendListId) {
-        this.friendListId = friendListId;
+    public void setFriendId(String friendId) {
+        this.friendId = friendId;
     }
 
     /**
@@ -183,5 +179,11 @@ public class FriendList {
         this.friendGroupId = friendGroupId;
     }
 
+    public String getAvatar() {
+        return avatar;
+    }
 
+    public void setAvatar(String avatar) {
+        this.avatar = avatar;
+    }
 }

@@ -40,6 +40,24 @@ public class GroupMember {
     private Date joinDate;
 
     /**
+     * 用户昵称
+     */
+    @Column(name = "nickName")
+    private String nickName;
+
+    /**
+     * 备注
+     */
+    @Column(name = "remarks")
+    private String remarks;
+
+    /**
+     * 用户头像地址
+     */
+    @Column(name = "avatar")
+    private String avatar;
+
+    /**
      * 获取流水ID
      *
      * @return groupMemberId - 流水ID
@@ -109,5 +127,29 @@ public class GroupMember {
      */
     public void setJoinDate(Date joinDate) {
         this.joinDate = joinDate;
+    }
+
+    public String getNickName() {
+        return nickName;
+    }
+
+    public void setNickName(String nickName) {
+        this.nickName = nickName;
+    }
+
+    public String getRemarks() {
+        return remarks;
+    }
+
+    public void setRemarks(String remarks) {
+        this.remarks = remarks;
+    }
+
+    public String getAvatar() {
+        return avatar;
+    }
+
+    public void setAvatar(String avatar) {
+        this.avatar = avatar;
     }
 }

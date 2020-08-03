@@ -2,12 +2,12 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.github.lazyboyl.chat.core.dao.GroupMemberDao">
   <resultMap id="BaseResultMap" type="com.github.lazyboyl.chat.core.entity.GroupMember">
-    <!--
-      WARNING - @mbg.generated
-    -->
     <id column="groupMemberId" jdbcType="VARCHAR" property="groupMemberId" />
     <result column="groupId" jdbcType="VARCHAR" property="groupId" />
     <result column="userId" jdbcType="VARCHAR" property="userId" />
     <result column="joinDate" jdbcType="DATE" property="joinDate" />
+    <result column="nickName" jdbcType="VARCHAR" property="nickName" />
+    <result column="remarks" jdbcType="VARCHAR" property="remarks" />
+    <result column="avatar" jdbcType="VARCHAR" property="avatar" />
   </resultMap>
 </mapper>
