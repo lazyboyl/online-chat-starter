@@ -19,15 +19,16 @@
     </properties>
 
     <dependencies>
+
         <dependency>
             <groupId>org.springframework.boot</groupId>
-            <artifactId>spring-boot-starter</artifactId>
+            <artifactId>spring-boot-starter-web</artifactId>
         </dependency>
 
         <dependency>
             <groupId>com.github.lazyboyl</groupId>
             <artifactId>websocket-spring-boot-starter</artifactId>
-            <version>1.0.1.RELEASE</version>
+            <version>1.0.2.RELEASE</version>
         </dependency>
 
         <!--通用 Mapper-->

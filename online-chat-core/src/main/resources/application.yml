@@ -1,8 +1,12 @@
+spring:
+  profiles:
+    active: dev
 
-websocket:
-  port: 8399
-  action: chat
-  thread:
-    boss: 12
-    work: 12
+mybatis:
+  config-location: classpath:chat/config/mybatis-config.xml
+  mapper-locations: classpath:chat/*.xml
+
+pagehelper:
+  helperDialect: mysql
+  reasonable: true
 

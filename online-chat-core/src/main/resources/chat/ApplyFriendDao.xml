@@ -12,4 +12,10 @@
     <result column="verifyDate" jdbcType="DATE" property="verifyDate" />
     <result column="applyType" jdbcType="CHAR" property="applyType" />
   </resultMap>
+
+  <!-- 根据申请人流水ID和接收人流水ID来获取申请好友的信息 -->
+  <select id="queryApplyFriendByApplyUserIdAndTargetUserId" resultMap="BaseResultMap">
+    select * from c_apply_friend where applyUserId = #{applyUserId} and targetUserId = #{targetUserId}
+  </select>
+
 </mapper>

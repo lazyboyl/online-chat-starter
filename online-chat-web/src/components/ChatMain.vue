@@ -77,6 +77,7 @@
               <Input style="width: 100%;" type="textarea" :rows="4" placeholder="请输入聊天消息"/>
             </div>
             <div style="background-color: white;">
+              <Button style="background-color: rgba(70,76,91,.9);color: white;float: right;margin-top: 10px;margin-right: 10px;margin-bottom: 10px;" @click="login">登录</Button>
               <Button style="background-color: rgba(70,76,91,.9);color: white;float: right;margin-top: 10px;margin-right: 10px;margin-bottom: 10px;">发送</Button>
             </div>
           </Layout>
@@ -132,7 +133,51 @@ export default {
             }
           ]
         }
-      ]
+      ],
+      wsuri: 'ws://127.0.0.1:8399/chat'
+    }
+  },
+  created () {
+    this.initWebSocket()
+  },
+  methods: {
+    login () {
+      let actions = {'url': '/chat/login/', 'params': {'token': 'abc'}}
+      this.websocketsend(JSON.stringify(actions))
+    },
+    initWebSocket () { // 初始化weosocket
+      this.websock = new WebSocket(this.wsuri)
+      this.websock.onmessage = this.websocketonmessage
+      this.websock.onopen = this.websocketonopen
+      this.websock.onerror = this.websocketonerror
+      this.websock.onclose = this.websocketclose
+    },
+    websocketonopen () { // 连接建立之后执行send方法发送数据
+    },
+    websocketonerror () { // 连接建立失败重连
+      console.log('--出错了-')
+      this.initWebSocket()
+    },
+    websocketonmessage (e) { // 数据接收
+      const redata = JSON.parse(e.data)
+      console.log('后端发送过来的信息是：' + redata)
+    },
+    websocketclose (e) { // 关闭
+      console.log('断开连接', e)
+    },
+    websocketsend (Data) { // 数据发送
+      if (this.websock.readyState === 1) {
+        this.websock.send(Data)
+      } else {
+        setTimeout(() => {
+          this.websock = new WebSocket(this.wsuri)
+          this.websock.onmessage = this.websocketonmessage
+          this.websock.onopen = this.websocketonopen
+          this.websock.onerror = this.websocketonerror
+          this.websock.onclose = this.websocketclose
+          setTimeout(() => { this.websocketsend(Data) }, 1000)
+        }, 1000)
+      }
     }
   }
 }

@@ -8,4 +8,27 @@
     <result column="friendGroupOrder" jdbcType="INTEGER" property="friendGroupOrder" />
     <result column="allowDeletion" jdbcType="CHAR" property="allowDeletion" />
   </resultMap>
+
+  <resultMap id="MyFriendListMap" type="com.github.lazyboyl.chat.core.vo.MyFriendListVo">
+    <id column="friendGroupId" jdbcType="VARCHAR" property="friendGroupId" />
+    <result column="friendGroupName" jdbcType="VARCHAR" property="friendGroupName" />
+    <result column="friendGroupOrder" jdbcType="INTEGER" property="friendGroupOrder" />
+    <result column="allowDeletion" jdbcType="CHAR" property="allowDeletion" />
+    <collection property="friendLists" ofType="com.github.lazyboyl.chat.core.entity.Friend" javaType="java.util.ArrayList">
+      <id column="friendId" jdbcType="VARCHAR" property="friendId" />
+      <result column="userId" jdbcType="VARCHAR" property="userId" />
+      <result column="belowUserId" jdbcType="VARCHAR" property="belowUserId" />
+      <result column="friendState" jdbcType="CHAR" property="friendState" />
+      <result column="nickName" jdbcType="VARCHAR" property="nickName" />
+      <result column="remarks" jdbcType="VARCHAR" property="remarks" />
+      <result column="friendGroupId" jdbcType="VARCHAR" property="friendGroupId" />
+      <result column="avatar" jdbcType="VARCHAR" property="avatar" />
+    </collection>
+  </resultMap>
+
+  <!-- 获取我的好友列表 -->
+  <select id="myFriendList" resultMap="MyFriendListMap">
+    select cfg.*,cf.* from c_friend_group cfg inner join c_friend cf on cfg.friendGroupId = cf.friendGroupId where cfg.crtUserId = #{crtUserId}
+  </select>
+
 </mapper>
