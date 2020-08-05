@@ -70,6 +70,34 @@ public class ApplyFriend {
     private String applyType;
 
     /**
+     * 分组流水ID
+     */
+    @Column(name = "friendGroupId")
+    private String friendGroupId;
+
+    /**
+     * 备注
+     */
+    @Column(name = "remark")
+    private String remark;
+
+    public String getFriendGroupId() {
+        return friendGroupId;
+    }
+
+    public void setFriendGroupId(String friendGroupId) {
+        this.friendGroupId = friendGroupId;
+    }
+
+    public String getRemark() {
+        return remark;
+    }
+
+    public void setRemark(String remark) {
+        this.remark = remark;
+    }
+
+    /**
      * 获取流水ID
      *
      * @return applyFriendId - 流水ID

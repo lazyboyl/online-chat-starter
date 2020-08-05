@@ -1,6 +1,7 @@
 package com.github.lazyboyl.chat.core.websocket.data;
 
 import com.alibaba.druid.util.StringUtils;
+import com.github.lazyboyl.chat.core.constant.FriendStateEnum;
 import io.netty.channel.Channel;
 import io.netty.channel.ChannelHandlerContext;
 
@@ -31,10 +32,11 @@ public class ChatLoginData {
 
     /**
      * 功能描述： 根据当前登录的用户的ID来获取通道信息
+     *
      * @param userId 用户流水ID
      * @return 返回通道信息
      */
-    public static Channel getLoginChannel(String userId){
+    public static Channel getLoginChannel(String userId) {
         return loginChannelMap.get(userId);
     }
 
@@ -66,6 +68,7 @@ public class ChatLoginData {
 
     /**
      * 功能描述： 判断当前的socket请求的通道是否已经注册成功
+     *
      * @param ctx 当前的请求通道
      * @return false：未注册；true：已注册
      */
@@ -79,11 +82,26 @@ public class ChatLoginData {
 
     /**
      * 功能描述： 获取当前登录的用户的流水ID
+     *
      * @param ctx 通道对象
      * @return 返回当前登录用户的流水ID
      */
-    public static String getUserId(ChannelHandlerContext ctx){
+    public static String getUserId(ChannelHandlerContext ctx) {
         return channelIDMapUserId.get(ctx.channel().id().asLongText());
+    }
+
+    /**
+     * 功能描述： 判断当前学生是否在线
+     *
+     * @param userId 用户的流水ID
+     * @return 返回验证结果
+     */
+    public static String checkUserIsOnline(String userId) {
+        if (loginChannelMap.get(userId) != null) {
+            return FriendStateEnum.ONLINE.getFriendState();
+        } else {
+            return FriendStateEnum.OFFLINE.getFriendState();
+        }
     }
 
 }

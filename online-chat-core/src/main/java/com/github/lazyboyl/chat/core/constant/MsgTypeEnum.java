@@ -37,7 +37,11 @@ public enum MsgTypeEnum {
     /**
      * 登录
      */
-    LOGIN("8");
+    LOGIN("8"),
+    /**
+     * 好友审核的通知
+     */
+    VERIFYFRIEND("9");
 
     private String type;
 

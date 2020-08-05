@@ -1,6 +1,6 @@
 /*==============================================================*/
 /* DBMS name:      MySQL 5.0                                    */
-/* Created on:     2020/8/3 17:11:39                            */
+/* Created on:     2020/8/5 19:29:10                            */
 /*==============================================================*/
 
 
@@ -36,6 +36,8 @@ create table c_apply_friend
    applyState           char(1) comment '申请状态【0：拒绝；1：待通过；2：过期；9：通过】',
    verifyDate           date comment '审核时间',
    applyType            char(1) comment '申请类型【1：好友申请；2：申请入群；】',
+   friendGroupId        varchar(32) comment '分组流水ID',
+   remark               varchar(100) comment '备注',
    primary key (applyFriendId)
 );
 

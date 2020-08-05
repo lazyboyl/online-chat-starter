@@ -12,6 +12,16 @@
     <result column="avatar" jdbcType="VARCHAR" property="avatar" />
   </resultMap>
 
+  <!-- 迁移分组底下的好友 -->
+  <update id="transferFriendGroup">
+    update c_friend set friendGroupId = #{targetFriendGroupId} where friendGroupId = #{friendGroupId} and belowUserId = #{belowUserId}
+  </update>
+
+  <!-- 删除我的好友 -->
+  <delete id="deleteFriend">
+    delete from c_friend where userId = #{userId} and belowUserId = #{belowUserId}
+  </delete>
+
   <!-- 好友上下线的时候更新好友状态 -->
   <update id="friendOnOff" >
     update c_friend set friendState = #{friendState} where userId = #{userId}
