@@ -58,6 +58,21 @@ public class GroupMember {
     private String avatar;
 
     /**
+     * 所属用户流水ID
+     */
+    @Column(name = "belowUserId")
+    private String belowUserId;
+
+
+    public String getBelowUserId() {
+        return belowUserId;
+    }
+
+    public void setBelowUserId(String belowUserId) {
+        this.belowUserId = belowUserId;
+    }
+
+    /**
      * 获取流水ID
      *
      * @return groupMemberId - 流水ID

@@ -1,5 +1,8 @@
 package com.github.lazyboyl.chat.core.entity;
 
+import com.github.lazyboyl.chat.core.config.UuidGenId;
+import tk.mybatis.mapper.annotation.KeySql;
+
 import java.util.Date;
 import javax.persistence.*;
 
@@ -10,7 +13,7 @@ public class ApplyGroup {
      */
     @Id
     @Column(name = "applyGroupId")
-    @GeneratedValue(generator = "JDBC")
+    @KeySql(genId = UuidGenId.class)
     private String applyGroupId;
 
     /**

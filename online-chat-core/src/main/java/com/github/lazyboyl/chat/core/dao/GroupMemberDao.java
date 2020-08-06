@@ -9,4 +9,14 @@ import tk.mybatis.mapper.common.Mapper;
  * 类描述：
  */
 public interface GroupMemberDao extends Mapper<GroupMember> {
+
+    /**
+     * 功能描述： 验证当前用户是否在当前群组中
+     *
+     * @param groupId 当前群组ID
+     * @param userId  群组中的用户ID
+     * @return
+     */
+    int checkUserIsInGroup(String groupId, String userId);
+
 }

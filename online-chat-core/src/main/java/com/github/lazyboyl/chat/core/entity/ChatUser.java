@@ -64,6 +64,20 @@ public class ChatUser {
     private String avatar;
 
     /**
+     * 默认群组流水ID
+     */
+    @Column(name = "defaultGroupId")
+    private String defaultGroupId;
+
+    public String getDefaultGroupId() {
+        return defaultGroupId;
+    }
+
+    public void setDefaultGroupId(String defaultGroupId) {
+        this.defaultGroupId = defaultGroupId;
+    }
+
+    /**
      * 获取用户流水ID
      *
      * @return userId - 用户流水ID

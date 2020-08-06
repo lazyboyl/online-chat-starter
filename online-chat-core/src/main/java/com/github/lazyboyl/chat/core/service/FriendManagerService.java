@@ -6,14 +6,13 @@ import com.github.lazyboyl.chat.core.constant.AllowDeletionEnum;
 import com.github.lazyboyl.chat.core.constant.ApplyStateEnum;
 import com.github.lazyboyl.chat.core.constant.MsgTypeEnum;
 import com.github.lazyboyl.chat.core.constant.SystemEnum;
-import com.github.lazyboyl.chat.core.dao.ApplyFriendDao;
-import com.github.lazyboyl.chat.core.dao.ChatUserDao;
-import com.github.lazyboyl.chat.core.dao.FriendDao;
-import com.github.lazyboyl.chat.core.dao.FriendGroupDao;
+import com.github.lazyboyl.chat.core.dao.*;
 import com.github.lazyboyl.chat.core.entity.*;
 import com.github.lazyboyl.chat.core.util.CtxWriteUtil;
+import com.github.lazyboyl.chat.core.util.PageUtil;
 import com.github.lazyboyl.chat.core.websocket.data.ChatLoginData;
 import com.github.lazyboyl.chat.core.websocket.entity.WebsocketMsgVo;
+import com.github.pagehelper.PageHelper;
 import io.netty.channel.Channel;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -63,15 +62,40 @@ public class FriendManagerService {
     private UserLoginAuthService userLoginAuthService;
 
     /**
+     * 聊天的实体的dao
+     */
+    @Autowired
+    private ChatMessageDao chatMessageDao;
+
+    /**
+     * 功能描述： 获取我的好友的分组列表的数据
+     *
+     * @return 返回查询结果
+     */
+    public ReturnInfo getFriendGroupList() {
+        ChatUser chatUser = userLoginAuthService.getLoginChatUser();
+        if (chatUser == null) {
+            return new ReturnInfo(SystemEnum.NOT_LOGIN.getKey(), "当前用户未登录或者登录过期！");
+        }
+        return new ReturnInfo(SystemEnum.SUCCESS.getKey(), "查看更多消息成功！", friendGroupDao.getFriendGroupList(chatUser.getUserId()));
+    }
+
+    /**
      * 功能描述： 查看更多消息
-     * @param userId 当前的聊天的用户的ID
-     * @param page 查看消息的页数
+     *
+     * @param userId   当前的聊天的用户的ID
+     * @param page     查看消息的页数
      * @param pageSize 每页加载的消息数
      * @return 返回查询结果
      */
-    public ReturnInfo loadMoreMessage(String userId,Integer page,Integer pageSize){
-
-        return null;
+    public ReturnInfo loadMoreMessage(String userId, Integer page, Integer pageSize) {
+        ChatUser chatUser = userLoginAuthService.getLoginChatUser();
+        if (chatUser == null) {
+            return new ReturnInfo(SystemEnum.NOT_LOGIN.getKey(), "当前用户未登录或者登录过期！");
+        }
+        PageHelper.startPage(page, (pageSize > 0 && pageSize <= 500) ? pageSize : 20);
+        HashMap<String, Object> res = PageUtil.getResult(chatMessageDao.loadMoreMessage(chatUser.getUserId(), userId));
+        return new ReturnInfo(SystemEnum.SUCCESS.getKey(), "查看更多消息成功！", res.get("rows"));
     }
 
     /**

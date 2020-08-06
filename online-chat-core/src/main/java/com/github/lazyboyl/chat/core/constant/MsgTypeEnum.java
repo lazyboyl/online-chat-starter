@@ -41,7 +41,11 @@ public enum MsgTypeEnum {
     /**
      * 好友审核的通知
      */
-    VERIFYFRIEND("9");
+    VERIFYFRIEND("9"),
+    /**
+     * 群组审核的通知
+     */
+    GROUPVERIFY("10");
 
     private String type;
 

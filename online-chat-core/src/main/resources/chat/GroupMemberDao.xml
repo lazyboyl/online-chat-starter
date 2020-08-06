@@ -1,13 +1,20 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.github.lazyboyl.chat.core.dao.GroupMemberDao">
-  <resultMap id="BaseResultMap" type="com.github.lazyboyl.chat.core.entity.GroupMember">
-    <id column="groupMemberId" jdbcType="VARCHAR" property="groupMemberId" />
-    <result column="groupId" jdbcType="VARCHAR" property="groupId" />
-    <result column="userId" jdbcType="VARCHAR" property="userId" />
-    <result column="joinDate" jdbcType="DATE" property="joinDate" />
-    <result column="nickName" jdbcType="VARCHAR" property="nickName" />
-    <result column="remarks" jdbcType="VARCHAR" property="remarks" />
-    <result column="avatar" jdbcType="VARCHAR" property="avatar" />
-  </resultMap>
+    <resultMap id="BaseResultMap" type="com.github.lazyboyl.chat.core.entity.GroupMember">
+        <id column="groupMemberId" jdbcType="VARCHAR" property="groupMemberId"/>
+        <result column="groupId" jdbcType="VARCHAR" property="groupId"/>
+        <result column="userId" jdbcType="VARCHAR" property="userId"/>
+        <result column="joinDate" jdbcType="DATE" property="joinDate"/>
+        <result column="nickName" jdbcType="VARCHAR" property="nickName"/>
+        <result column="remarks" jdbcType="VARCHAR" property="remarks"/>
+        <result column="avatar" jdbcType="VARCHAR" property="avatar"/>
+        <result column="belowUserId" jdbcType="VARCHAR" property="belowUserId"/>
+    </resultMap>
+
+    <!-- 验证当前用户是否在当前群组中 -->
+    <select id="checkUserIsInGroup" resultType="java.lang.Integer">
+     select count(1) from c_group_member where groupId = #{groupId} and userId=#{userId}
+  </select>
+
 </mapper>

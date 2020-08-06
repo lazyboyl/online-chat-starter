@@ -9,4 +9,20 @@
     <result column="crtDate" jdbcType="DATE" property="crtDate" />
     <result column="messageType" jdbcType="VARCHAR" property="messageType" />
   </resultMap>
+
+  <resultMap id="LoadMoreMessageMap" type="com.github.lazyboyl.chat.core.vo.LoadMoreMessageVo">
+    <id column="chatMessageId" jdbcType="VARCHAR" property="chatMessageId" />
+    <result column="receiveUserId" jdbcType="VARCHAR" property="receiveUserId" />
+    <result column="sendUserId" jdbcType="VARCHAR" property="sendUserId" />
+    <result column="talkDate" jdbcType="DATE" property="talkDate" />
+    <result column="talkContent" jdbcType="VARCHAR" property="talkContent" />
+    <result column="receiveUserId" jdbcType="VARCHAR" property="receiveUserId" />
+  </resultMap>
+
+  <!-- 查看更多消息 -->
+  <select id="loadMoreMessage" resultMap="LoadMoreMessageMap">
+    select ccm.chatMessageId,ccm.messageContent as talkContent,crm.readDate as talkDate,crm.sendUserId,crm.receiveUserId from
+    c_chat_message ccm INNER JOIN c_receive_message crm on ccm.chatMessageId = crm.chatMessageId where sendUserId = #{sendUserId} and receiveUserId = #{receiveUserId}
+  </select>
+
 </mapper>

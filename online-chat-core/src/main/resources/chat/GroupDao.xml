@@ -2,13 +2,26 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.github.lazyboyl.chat.core.dao.GroupDao">
   <resultMap id="BaseResultMap" type="com.github.lazyboyl.chat.core.entity.Group">
-    <!--
-      WARNING - @mbg.generated
-    -->
     <id column="groupId" jdbcType="VARCHAR" property="groupId" />
     <result column="groupName" jdbcType="VARCHAR" property="groupName" />
     <result column="groupImg" jdbcType="VARCHAR" property="groupImg" />
     <result column="crtDate" jdbcType="DATE" property="crtDate" />
     <result column="crtUserId" jdbcType="VARCHAR" property="crtUserId" />
   </resultMap>
+
+  <!-- 实现数据的迁移 -->
+  <update id="transferGroup">
+    update c_group set groupId = #{transGroupId} where groupId = #{groupId} and  crtUserId = #{crtUserId}
+  </update>
+
+  <!-- 更新群组信息 -->
+  <update id="updateGroup">
+    update c_group set groupName = #{groupName},groupImg=#{groupImg} where groupId =#{groupId} and crtUserId = #{crtUserId}
+  </update>
+
+  <!-- 验证当前的群组名称是否被使用了 -->
+  <select id="checkGroupName" resultType="java.lang.Integer">
+    select count(1) from c_group where groupName = #{groupName} and crtUserId = #{crtUserId}
+  </select>
+
 </mapper>

@@ -10,6 +10,7 @@
         <result column="syncUserId" jdbcType="VARCHAR" property="syncUserId"/>
         <result column="userNo" jdbcType="VARCHAR" property="userNo"/>
         <result column="avatar" jdbcType="VARCHAR" property="avatar"/>
+        <result column="defaultGroupId" jdbcType="VARCHAR" property="defaultGroupId"/>
     </resultMap>
 
   <resultMap id="QueryFriendMap" type="com.github.lazyboyl.chat.core.vo.QueryFriendVo">

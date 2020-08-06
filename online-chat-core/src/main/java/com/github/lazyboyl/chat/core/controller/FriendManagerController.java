@@ -24,6 +24,16 @@ public class FriendManagerController {
     private FriendManagerService friendManagerService;
 
     /**
+     * 功能描述： 获取我的好友的分组列表的数据
+     *
+     * @return 返回查询结果
+     */
+    @PostMapping("getFriendGroupList")
+    public ReturnInfo getFriendGroupList() {
+        return friendManagerService.getFriendGroupList();
+    }
+
+    /**
      * 功能描述： 查看更多消息
      *
      * @param userId   当前的聊天的用户的ID
@@ -32,7 +42,9 @@ public class FriendManagerController {
      * @return 返回查询结果
      */
     @PostMapping("loadMoreMessage")
-    public ReturnInfo loadMoreMessage(String userId, Integer page, Integer pageSize) {
+    public ReturnInfo loadMoreMessage(@RequestParam(name = "userId") String userId,
+                                      @RequestParam(name = "page") Integer page,
+                                      @RequestParam(name = "pageSize") Integer pageSize) {
         return friendManagerService.loadMoreMessage(userId, page, pageSize);
     }
 
@@ -54,7 +66,8 @@ public class FriendManagerController {
      * @return 返回删除操作结果
      */
     @PostMapping("deleteFriendGroup")
-    public ReturnInfo deleteFriendGroup(String friendGroupId, String targetFriendGroupId) {
+    public ReturnInfo deleteFriendGroup(@RequestParam(name = "friendGroupId") String friendGroupId,
+                                        @RequestParam(name = "targetFriendGroupId") String targetFriendGroupId) {
         return friendManagerService.deleteFriendGroup(friendGroupId, targetFriendGroupId);
     }
 
@@ -67,7 +80,8 @@ public class FriendManagerController {
      * @return 返回创建结果
      */
     @PostMapping("createFriendGroup")
-    public ReturnInfo createFriendGroup(String friendGroupName, int friendGroupOrder) {
+    public ReturnInfo createFriendGroup(@RequestParam(name = "friendGroupName") String friendGroupName,
+                                        @RequestParam(name = "friendGroupOrder") int friendGroupOrder) {
         return friendManagerService.createFriendGroup(friendGroupName, friendGroupOrder);
     }
 

@@ -15,7 +15,16 @@ import java.util.List;
 public interface FriendGroupDao extends Mapper<FriendGroup> {
 
     /**
+     * 功能描述： 获取我的好友分组列表数据
+     *
+     * @param crtUserId 创建人流水ID
+     * @return 返回查询结果
+     */
+    List<FriendGroup> getFriendGroupList(@Param("crtUserId") String crtUserId);
+
+    /**
      * 功能描述： 获取我的好友列表
+     *
      * @param crtUserId 当前登录的用户的流水ID
      * @return 返回我的好友列表的数据
      */
