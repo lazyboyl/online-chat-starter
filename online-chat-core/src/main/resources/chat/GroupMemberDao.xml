@@ -12,6 +12,21 @@
         <result column="belowUserId" jdbcType="VARCHAR" property="belowUserId"/>
     </resultMap>
 
+    <!-- 判断当前用户是否在这个群组中  -->
+    <select id="isUserInGroup" resultType="java.lang.Integer">
+        select count(1) from c_group_member where groupId = #{groupId} and userId =#{userId}
+    </select>
+
+    <!-- 查询当前群组底下的成员 -->
+    <select id="getGroupMember" resultMap="BaseResultMap">
+        select * from c_group_member where groupId = #{groupId} and userId !=#{userId}
+    </select>
+
+    <!-- 将用户从群组中移除 -->
+    <delete id="removeUserGroup">
+        delete from c_group_member where groupId = #{groupId} and userId = #{userId} and belowUserId = #{belowUserId}
+    </delete>
+
     <!-- 验证当前用户是否在当前群组中 -->
     <select id="checkUserIsInGroup" resultType="java.lang.Integer">
      select count(1) from c_group_member where groupId = #{groupId} and userId=#{userId}

@@ -1,6 +1,6 @@
 /*==============================================================*/
 /* DBMS name:      MySQL 5.0                                    */
-/* Created on:     2020/8/5 19:29:10                            */
+/* Created on:     2020/8/6 20:51:24                            */
 /*==============================================================*/
 
 
@@ -86,6 +86,7 @@ create table c_chat_user
    syncUserId           varchar(32) comment '同步系统流水ID',
    userNo               varchar(20) comment '用户编号',
    avatar               varchar(200) comment '用户头像地址',
+   defaultGroupId       varchar(32) comment '默认群组流水ID',
    primary key (userId)
 );
 
@@ -143,6 +144,7 @@ create table c_group_member
    nickName             varchar(200) comment '用户昵称',
    remarks              varchar(200) comment '备注',
    avatar               varchar(200) comment '用户头像地址',
+   belowUserId          varchar(32) comment '所属用户流水ID',
    primary key (groupMemberId)
 );
 

@@ -24,6 +24,35 @@ public class GroupManagerController {
     private GroupManagerService groupManagerService;
 
     /**
+     * 功能描述： 查询群的消息
+     *
+     * @param groupId  群流水ID
+     * @param page     第几页
+     * @param pageSize 每页显示记录
+     * @return 返回查询结果
+     */
+    @PostMapping("loadMoreMessage")
+    public ReturnInfo loadMoreMessage(@RequestParam(name = "groupId")String groupId,
+                                      @RequestParam(name = "page")Integer page,
+                                      @RequestParam(name = "pageSize")Integer pageSize){
+        return groupManagerService.loadMoreMessage(groupId,page,pageSize);
+    }
+
+
+    /**
+     * 功能描述： 将用户从群组中移除
+     *
+     * @param groupId      群组ID
+     * @param removeUserId 待移除的用户ID
+     * @return 返回移除结果
+     */
+    @PostMapping("removeUserGroup")
+    public ReturnInfo removeUserGroup(@RequestParam(name = "groupId")String groupId,
+                                      @RequestParam(name = "removeUserId")String removeUserId){
+        return groupManagerService.removeUserGroup(groupId, removeUserId);
+    }
+
+    /**
      * 功能描述： 用户审核邀请入群
      *
      * @param applyGroupId 邀请入群流水ID

@@ -17,7 +17,16 @@
     <result column="talkDate" jdbcType="DATE" property="talkDate" />
     <result column="talkContent" jdbcType="VARCHAR" property="talkContent" />
     <result column="receiveUserId" jdbcType="VARCHAR" property="receiveUserId" />
+    <result column="groupId" jdbcType="VARCHAR" property="groupId" />
   </resultMap>
+
+  <!-- 群组查看更多消息 -->
+  <select id="loadGroupMoreMessage" resultMap="LoadMoreMessageMap">
+    select ccm.chatMessageId,ccm.messageContent as talkContent,crm.readDate as talkDate,crm.sendUserId,crm.receiveUserId,crm.groupId from
+    c_chat_message ccm INNER JOIN c_receive_message crm on ccm.chatMessageId = crm.chatMessageId where groupId = #{groupId}
+  </select>
+
+
 
   <!-- 查看更多消息 -->
   <select id="loadMoreMessage" resultMap="LoadMoreMessageMap">

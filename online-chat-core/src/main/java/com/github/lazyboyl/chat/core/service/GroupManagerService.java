@@ -5,14 +5,13 @@ import com.github.lazyboyl.chat.core.constant.ApplyStateEnum;
 import com.github.lazyboyl.chat.core.constant.GroupApplyType;
 import com.github.lazyboyl.chat.core.constant.MsgTypeEnum;
 import com.github.lazyboyl.chat.core.constant.SystemEnum;
-import com.github.lazyboyl.chat.core.dao.ApplyGroupDao;
-import com.github.lazyboyl.chat.core.dao.ChatUserDao;
-import com.github.lazyboyl.chat.core.dao.GroupDao;
-import com.github.lazyboyl.chat.core.dao.GroupMemberDao;
+import com.github.lazyboyl.chat.core.dao.*;
 import com.github.lazyboyl.chat.core.entity.*;
 import com.github.lazyboyl.chat.core.util.CtxWriteUtil;
+import com.github.lazyboyl.chat.core.util.PageUtil;
 import com.github.lazyboyl.chat.core.websocket.data.ChatLoginData;
 import com.github.lazyboyl.chat.core.websocket.entity.WebsocketMsgVo;
+import com.github.pagehelper.PageHelper;
 import io.netty.channel.Channel;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -62,6 +61,72 @@ public class GroupManagerService {
     private ChatUserDao chatUserDao;
 
     /**
+     * 注入聊天的dao
+     */
+    @Autowired
+    private ChatMessageDao chatMessageDao;
+
+    /**
+     * 功能描述： 查询群的消息
+     *
+     * @param groupId  群流水ID
+     * @param page     第几页
+     * @param pageSize 每页显示记录
+     * @return 返回查询结果
+     */
+    public ReturnInfo loadMoreMessage(String groupId, Integer page, Integer pageSize) {
+        ChatUser chatUser = userLoginAuthService.getLoginChatUser();
+        if (chatUser == null) {
+            return new ReturnInfo(SystemEnum.NOT_LOGIN.getKey(), "当前用户未登录或者登录过期！");
+        }
+        // 判断当前用户是否已经加入群组
+        if (groupMemberDao.checkUserIsInGroup(groupId, chatUser.getUserId()) == 0) {
+            return new ReturnInfo(SystemEnum.AUTH_FAIL.getKey(), "越权访问！");
+        }
+        PageHelper.startPage(page, (pageSize > 0 && pageSize <= 500) ? pageSize : 20);
+        HashMap<String, Object> res = PageUtil.getResult(chatMessageDao.loadGroupMoreMessage(groupId));
+        return new ReturnInfo(SystemEnum.SUCCESS.getKey(), "查看更多消息成功！", res.get("rows"));
+    }
+
+    /**
+     * 功能描述： 将用户从群组中移除
+     *
+     * @param groupId      群组ID
+     * @param removeUserId 待移除的用户ID
+     * @return 返回移除结果
+     */
+    public ReturnInfo removeUserGroup(String groupId, String removeUserId) {
+        ChatUser chatUser = userLoginAuthService.getLoginChatUser();
+        if (chatUser == null) {
+            return new ReturnInfo(SystemEnum.NOT_LOGIN.getKey(), "当前用户未登录或者登录过期！");
+        }
+        Group group = groupDao.selectByPrimaryKey(groupId);
+        if (group == null) {
+            return new ReturnInfo(SystemEnum.FAIL.getKey(), "查无此群组记录！");
+        }
+        Date operateDate = new Date();
+        // 判断当前的群组是否属于当前登录的用户，只有管理员才可以删除群组成员
+        if (!group.getCrtUserId().equals(chatUser.getUserId())) {
+            return new ReturnInfo(SystemEnum.AUTH_FAIL.getKey(), "非法访问！");
+        }
+        // 将用户从群组中移除
+        groupMemberDao.removeUserGroup(groupId, removeUserId, chatUser.getUserId());
+        // 推送申请审核结果给到邀请他的群主
+        Channel channel = ChatLoginData.getLoginChannel(removeUserId);
+        if (channel != null) {
+            Map<String, Object> data = new HashMap<>();
+            data.put("groupId", groupId);
+            data.put("groupName", group.getGroupName());
+            data.put("removeDate", operateDate);
+            data.put("removeUserId", chatUser.getUserId());
+            data.put("removeUserNickName", chatUser.getNickName());
+            data.put("avatar", chatUser.getAvatar());
+            CtxWriteUtil.writeAndFlush(channel, new WebsocketMsgVo(MsgTypeEnum.REMOVEGROUP.getType(), data));
+        }
+        return new ReturnInfo(SystemEnum.SUCCESS.getKey(), "移除用户成功！");
+    }
+
+    /**
      * 功能描述： 用户审核邀请入群
      *
      * @param applyGroupId 邀请入群流水ID
@@ -69,9 +134,63 @@ public class GroupManagerService {
      * @param note         审核理由
      * @return 返回审核结果
      */
-    public ReturnInfo userVerify(String applyGroupId, String applyState, String note){
-
-        return null;
+    public ReturnInfo userVerify(String applyGroupId, String applyState, String note) {
+        ChatUser chatUser = userLoginAuthService.getLoginChatUser();
+        if (chatUser == null) {
+            return new ReturnInfo(SystemEnum.NOT_LOGIN.getKey(), "当前用户未登录或者登录过期！");
+        }
+        ApplyGroup applyGroup = applyGroupDao.selectByPrimaryKey(applyGroupId);
+        if (applyGroup == null) {
+            return new ReturnInfo(SystemEnum.FAIL.getKey(), "查无此申请记录！");
+        }
+        Date operateDate = new Date();
+        Group group = groupDao.selectByPrimaryKey(applyGroup.getGroupId());
+        if (group == null) {
+            applyGroup.setApplyState(ApplyStateEnum.REFUSE.getState());
+            applyGroup.setVerifyDate(operateDate);
+            updateApplyGroupApplyState(applyGroup, ApplyStateEnum.REFUSE.getState(), chatUser.getUserId());
+            return new ReturnInfo(SystemEnum.FAIL.getKey(), "查无此群组记录！");
+        }
+        // 判断当前用户是否已经加入群组
+        if (groupMemberDao.checkUserIsInGroup(applyGroup.getGroupId(), chatUser.getUserId()) > 0) {
+            // 既然已经存在用户组中，那把当前的审核状态直接修改为审核通过
+            applyGroup.setApplyState(ApplyStateEnum.PASS.getState());
+            applyGroup.setVerifyDate(operateDate);
+            updateApplyGroupApplyState(applyGroup, ApplyStateEnum.PASS.getState(), chatUser.getUserId());
+            return new ReturnInfo(SystemEnum.FAIL.getKey(), "当前成员已经是该群的成员，无需再次审核！");
+        }
+        // 若当前审核为审核通过
+        if (applyState.equals(ApplyStateEnum.PASS.getState())) {
+            GroupMember groupMember = new GroupMember();
+            groupMember.setGroupId(applyGroup.getGroupId());
+            groupMember.setBelowUserId(applyGroup.getApplyUserId());
+            groupMember.setJoinDate(operateDate);
+            groupMember.setAvatar(chatUser.getAvatar());
+            groupMember.setNickName(chatUser.getNickName());
+            groupMember.setUserId(chatUser.getUserId());
+            groupMemberDao.insertSelective(groupMember);
+            applyGroup.setApplyState(ApplyStateEnum.PASS.getState());
+            applyGroup.setVerifyDate(operateDate);
+            updateApplyGroupApplyState(applyGroup, ApplyStateEnum.PASS.getState(), chatUser.getUserId());
+        } else {
+            applyGroup.setApplyState(ApplyStateEnum.REFUSE.getState());
+            applyGroup.setVerifyDate(operateDate);
+            applyGroupDao.updateByPrimaryKeySelective(applyGroup);
+        }
+        // 推送申请审核结果给到邀请他的群主
+        Channel channel = ChatLoginData.getLoginChannel(applyGroup.getApplyUserId());
+        if (channel != null) {
+            Map<String, Object> data = new HashMap<>();
+            data.put("groupId", applyGroup.getApplyGroupId());
+            data.put("verifyDate", operateDate);
+            data.put("note", note);
+            data.put("applyState", applyState);
+            data.put("verifyUserId", chatUser.getUserId());
+            data.put("verifyUserNickName", chatUser.getNickName());
+            data.put("avatar", chatUser.getAvatar());
+            CtxWriteUtil.writeAndFlush(channel, new WebsocketMsgVo(MsgTypeEnum.VERIFYFRIEND.getType(), data));
+        }
+        return new ReturnInfo(SystemEnum.SUCCESS.getKey(), "审核完成！");
     }
 
     /**
@@ -101,7 +220,7 @@ public class GroupManagerService {
         }
         ChatUser applyChatUser = chatUserDao.selectByPrimaryKey(applyGroup.getApplyUserId());
         if (applyChatUser == null) {
-            // 既然已经存在用户组中，那把当前的审核状态直接修改为审核通过
+            // 当前申请的用户已经注销不存在了
             applyGroup.setApplyState(ApplyStateEnum.REFUSE.getState());
             applyGroup.setVerifyDate(operateDate);
             updateApplyGroupApplyState(applyGroup, ApplyStateEnum.REFUSE.getState(), chatUser.getUserId());
@@ -143,15 +262,17 @@ public class GroupManagerService {
             data.put("applyState", applyState);
             data.put("groupId", applyGroup.getGroupId());
             data.put("applyGroupId", applyGroupId);
+            data.put("avatar", chatUser.getAvatar());
             CtxWriteUtil.writeAndFlush(channel, new WebsocketMsgVo(MsgTypeEnum.GROUPVERIFY.getType(), data));
         }
-        return new ReturnInfo(SystemEnum.SUCCESS.getKey(), "入群申请发送成功！");
+        return new ReturnInfo(SystemEnum.SUCCESS.getKey(), "审核完成！");
     }
 
     /**
      * 功能描述：更新入群申请和群组邀请的记录的状态
+     *
      * @param applyGroup 申请信息
-     * @param userId 申请人流水ID
+     * @param userId     申请人流水ID
      * @param applyState 需要更新的状态
      */
     protected void updateApplyGroupApplyState(ApplyGroup applyGroup, String userId, String applyState) {

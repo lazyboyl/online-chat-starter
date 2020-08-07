@@ -15,6 +15,14 @@ import java.util.List;
 public interface ChatMessageDao extends Mapper<ChatMessage> {
 
     /**
+     * 功能描述：查询群组更多消息
+     *
+     * @param groupId 群组流水ID
+     * @return 返回查询结果
+     */
+    List<LoadMoreMessageVo> loadGroupMoreMessage(@Param("groupId") String groupId);
+
+    /**
      * 功能描述： 查看更多消息
      *
      * @param sendUserId    发送消息的人的流水ID

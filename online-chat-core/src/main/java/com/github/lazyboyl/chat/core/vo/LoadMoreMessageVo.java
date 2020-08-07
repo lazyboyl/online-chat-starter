@@ -32,6 +32,19 @@ public class LoadMoreMessageVo {
      */
     private String talkContent;
 
+    /**
+     * 群组ID
+     */
+    private String groupId;
+
+    public String getGroupId() {
+        return groupId;
+    }
+
+    public void setGroupId(String groupId) {
+        this.groupId = groupId;
+    }
+
     public String getChatMessageId() {
         return chatMessageId;
     }
