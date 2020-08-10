@@ -1,6 +1,6 @@
 package com.github.lazyboyl.chat.core.service;
 
-import com.github.lazyboyl.chat.core.auth.UserLoginAuthService;
+import com.github.lazyboyl.chat.core.auth.OnlineChatInitialization;
 import com.github.lazyboyl.chat.core.constant.FriendStateEnum;
 import com.github.lazyboyl.chat.core.constant.MsgTypeEnum;
 import com.github.lazyboyl.chat.core.constant.ReceiveMessageState;
@@ -10,8 +10,6 @@ import com.github.lazyboyl.chat.core.entity.*;
 import com.github.lazyboyl.chat.core.util.CtxWriteUtil;
 import com.github.lazyboyl.chat.core.websocket.data.ChatLoginData;
 import com.github.lazyboyl.chat.core.websocket.entity.WebsocketMsgVo;
-import com.github.lazyboyl.websocket.server.channel.entity.SocketResponse;
-import com.github.lazyboyl.websocket.util.SocketUtil;
 import io.netty.channel.Channel;
 import io.netty.channel.ChannelHandlerContext;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -36,7 +34,7 @@ public class WebsocketChatService {
      * 获取当前登录用户的相关操作的实现
      */
     @Autowired
-    private UserLoginAuthService userLoginAuthService;
+    private OnlineChatInitialization onlineChatInitialization;
 
     /**
      * 注入好友的dao
@@ -85,7 +83,7 @@ public class WebsocketChatService {
      * @return 返回发送结果
      */
     public ReturnInfo sendGroupMessage(String token, ChannelHandlerContext ctx, String groupId, String uniqueNo, String messageContent) {
-        ChatUser chatUser = userLoginAuthService.getLoginChatUserByToken(token);
+        ChatUser chatUser = onlineChatInitialization.getLoginChatUserByToken(token);
         Map<String, Object> uniqueMap = new HashMap<>();
         uniqueMap.put("uniqueNo", uniqueNo);
         Map<String, Object> data;
@@ -140,7 +138,7 @@ public class WebsocketChatService {
      * @param messageContent 聊天的消息
      */
     public ReturnInfo sendMessage(String token, ChannelHandlerContext ctx, String receiveUserId, String uniqueNo, String messageContent) {
-        ChatUser chatUser = userLoginAuthService.getLoginChatUserByToken(token);
+        ChatUser chatUser = onlineChatInitialization.getLoginChatUserByToken(token);
         Map<String, Object> uniqueMap = new HashMap<>();
         uniqueMap.put("uniqueNo", uniqueNo);
         Map<String, Object> data = new HashMap<>();
@@ -190,7 +188,7 @@ public class WebsocketChatService {
      * @param ctx   当前连接的socket的对象
      */
     public void login(String token, ChannelHandlerContext ctx) {
-        ChatUser chatUser = userLoginAuthService.getLoginChatUserByToken(token);
+        ChatUser chatUser = onlineChatInitialization.getLoginChatUserByToken(token);
         Map<String, Object> data = new HashMap<>();
         if (chatUser == null) {
             data.put("code", SystemEnum.FAIL.getKey());

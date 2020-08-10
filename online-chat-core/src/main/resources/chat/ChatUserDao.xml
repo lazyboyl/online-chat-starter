@@ -20,6 +20,21 @@
     <result column="avatar" jdbcType="VARCHAR" property="avatar"/>
   </resultMap>
 
+    <!-- 根据外部流水ID来获取用户数据 -->
+    <select id="queryChatUserBySyncUserId" resultMap="BaseResultMap">
+        select * from c_chat_user where syncUserId = #{syncUserId}
+    </select>
+
+    <!-- 根据外部流水ID来更新用户状态 -->
+    <delete id="updateChatUserStateBySyncUserId">
+        update  c_chat_user set userState = #{userState} where syncUserId = #{syncUserId}
+    </delete>
+
+    <!-- 判断当前用户是否已经注册了 -->
+    <select id="checkUserIsRegister" resultType="java.lang.Integer">
+        select count(1) from c_chat_user where userName = #{userName} and syncUserId = #{syncUserId}
+    </select>
+
     <!-- 查询好友 -->
     <select id="queryFriend" resultMap="QueryFriendMap">
         select * from c_chat_user where userState = '9'

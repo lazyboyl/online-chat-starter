@@ -1,6 +1,6 @@
 package com.github.lazyboyl.chat.core.service;
 
-import com.github.lazyboyl.chat.core.auth.UserLoginAuthService;
+import com.github.lazyboyl.chat.core.auth.OnlineChatInitialization;
 import com.github.lazyboyl.chat.core.constant.ApplyStateEnum;
 import com.github.lazyboyl.chat.core.constant.GroupApplyType;
 import com.github.lazyboyl.chat.core.constant.MsgTypeEnum;
@@ -34,10 +34,10 @@ public class GroupManagerService {
      * 获取当前登录用户的相关操作的实现
      */
     @Autowired
-    private UserLoginAuthService userLoginAuthService;
+    private OnlineChatInitialization onlineChatInitialization;
 
     /**
-     * 功注入群组的dao
+     * 注入群组的dao
      */
     @Autowired
     private GroupDao groupDao;
@@ -75,7 +75,7 @@ public class GroupManagerService {
      * @return 返回查询结果
      */
     public ReturnInfo loadMoreMessage(String groupId, Integer page, Integer pageSize) {
-        ChatUser chatUser = userLoginAuthService.getLoginChatUser();
+        ChatUser chatUser = onlineChatInitialization.getLoginChatUser();
         if (chatUser == null) {
             return new ReturnInfo(SystemEnum.NOT_LOGIN.getKey(), "当前用户未登录或者登录过期！");
         }
@@ -96,7 +96,7 @@ public class GroupManagerService {
      * @return 返回移除结果
      */
     public ReturnInfo removeUserGroup(String groupId, String removeUserId) {
-        ChatUser chatUser = userLoginAuthService.getLoginChatUser();
+        ChatUser chatUser = onlineChatInitialization.getLoginChatUser();
         if (chatUser == null) {
             return new ReturnInfo(SystemEnum.NOT_LOGIN.getKey(), "当前用户未登录或者登录过期！");
         }
@@ -135,7 +135,7 @@ public class GroupManagerService {
      * @return 返回审核结果
      */
     public ReturnInfo userVerify(String applyGroupId, String applyState, String note) {
-        ChatUser chatUser = userLoginAuthService.getLoginChatUser();
+        ChatUser chatUser = onlineChatInitialization.getLoginChatUser();
         if (chatUser == null) {
             return new ReturnInfo(SystemEnum.NOT_LOGIN.getKey(), "当前用户未登录或者登录过期！");
         }
@@ -202,7 +202,7 @@ public class GroupManagerService {
      * @return 返回审核结果
      */
     public ReturnInfo groupVerify(String applyGroupId, String applyState, String note) {
-        ChatUser chatUser = userLoginAuthService.getLoginChatUser();
+        ChatUser chatUser = onlineChatInitialization.getLoginChatUser();
         if (chatUser == null) {
             return new ReturnInfo(SystemEnum.NOT_LOGIN.getKey(), "当前用户未登录或者登录过期！");
         }
@@ -289,7 +289,7 @@ public class GroupManagerService {
      * @return 返回申请入群结果
      */
     public ReturnInfo applyGroup(String groupId, String note) {
-        ChatUser chatUser = userLoginAuthService.getLoginChatUser();
+        ChatUser chatUser = onlineChatInitialization.getLoginChatUser();
         if (chatUser == null) {
             return new ReturnInfo(SystemEnum.NOT_LOGIN.getKey(), "当前用户未登录或者登录过期！");
         }
@@ -336,7 +336,7 @@ public class GroupManagerService {
      * @return 返回邀请结果
      */
     public ReturnInfo invitationGroup(String groupId, String userId, String note) {
-        ChatUser chatUser = userLoginAuthService.getLoginChatUser();
+        ChatUser chatUser = onlineChatInitialization.getLoginChatUser();
         if (chatUser == null) {
             return new ReturnInfo(SystemEnum.NOT_LOGIN.getKey(), "当前用户未登录或者登录过期！");
         }
@@ -387,7 +387,7 @@ public class GroupManagerService {
      * @return 返回删除结果
      */
     public ReturnInfo deleteGroup(String groupId) {
-        ChatUser chatUser = userLoginAuthService.getLoginChatUser();
+        ChatUser chatUser = onlineChatInitialization.getLoginChatUser();
         if (chatUser == null) {
             return new ReturnInfo(SystemEnum.NOT_LOGIN.getKey(), "当前用户未登录或者登录过期！");
         }
@@ -407,7 +407,7 @@ public class GroupManagerService {
      * @return 返回更新结果
      */
     public ReturnInfo updateGroup(String groupId, String groupName, String groupImg) {
-        ChatUser chatUser = userLoginAuthService.getLoginChatUser();
+        ChatUser chatUser = onlineChatInitialization.getLoginChatUser();
         if (chatUser == null) {
             return new ReturnInfo(SystemEnum.NOT_LOGIN.getKey(), "当前用户未登录或者登录过期！");
         }
@@ -422,7 +422,7 @@ public class GroupManagerService {
      * @return 返回查询结果
      */
     public ReturnInfo getGroup(String groupId) {
-        ChatUser chatUser = userLoginAuthService.getLoginChatUser();
+        ChatUser chatUser = onlineChatInitialization.getLoginChatUser();
         if (chatUser == null) {
             return new ReturnInfo(SystemEnum.NOT_LOGIN.getKey(), "当前用户未登录或者登录过期！");
         }
@@ -441,7 +441,7 @@ public class GroupManagerService {
      * @return 返回增加结果
      */
     public ReturnInfo addGroup(String groupName, String groupImg) {
-        ChatUser chatUser = userLoginAuthService.getLoginChatUser();
+        ChatUser chatUser = onlineChatInitialization.getLoginChatUser();
         if (chatUser == null) {
             return new ReturnInfo(SystemEnum.NOT_LOGIN.getKey(), "当前用户未登录或者登录过期！");
         }

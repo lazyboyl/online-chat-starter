@@ -1,7 +1,7 @@
 package com.github.lazyboyl.chat.core.service;
 
 import com.alibaba.druid.util.StringUtils;
-import com.github.lazyboyl.chat.core.auth.UserLoginAuthService;
+import com.github.lazyboyl.chat.core.auth.OnlineChatInitialization;
 import com.github.lazyboyl.chat.core.constant.AllowDeletionEnum;
 import com.github.lazyboyl.chat.core.constant.ApplyStateEnum;
 import com.github.lazyboyl.chat.core.constant.MsgTypeEnum;
@@ -59,7 +59,7 @@ public class FriendManagerService {
      * 获取当前登录用户的相关操作的实现
      */
     @Autowired
-    private UserLoginAuthService userLoginAuthService;
+    private OnlineChatInitialization onlineChatInitialization;
 
     /**
      * 聊天的实体的dao
@@ -73,7 +73,7 @@ public class FriendManagerService {
      * @return 返回查询结果
      */
     public ReturnInfo getFriendGroupList() {
-        ChatUser chatUser = userLoginAuthService.getLoginChatUser();
+        ChatUser chatUser = onlineChatInitialization.getLoginChatUser();
         if (chatUser == null) {
             return new ReturnInfo(SystemEnum.NOT_LOGIN.getKey(), "当前用户未登录或者登录过期！");
         }
@@ -89,7 +89,7 @@ public class FriendManagerService {
      * @return 返回查询结果
      */
     public ReturnInfo loadMoreMessage(String userId, Integer page, Integer pageSize) {
-        ChatUser chatUser = userLoginAuthService.getLoginChatUser();
+        ChatUser chatUser = onlineChatInitialization.getLoginChatUser();
         if (chatUser == null) {
             return new ReturnInfo(SystemEnum.NOT_LOGIN.getKey(), "当前用户未登录或者登录过期！");
         }
@@ -104,7 +104,7 @@ public class FriendManagerService {
      * @return 返回获取结果
      */
     public ReturnInfo getApplyFriendList() {
-        ChatUser chatUser = userLoginAuthService.getLoginChatUser();
+        ChatUser chatUser = onlineChatInitialization.getLoginChatUser();
         if (chatUser == null) {
             return new ReturnInfo(SystemEnum.NOT_LOGIN.getKey(), "当前用户未登录或者登录过期！");
         }
@@ -119,7 +119,7 @@ public class FriendManagerService {
      * @return 返回删除操作结果
      */
     public ReturnInfo deleteFriendGroup(String friendGroupId, String targetFriendGroupId) {
-        ChatUser chatUser = userLoginAuthService.getLoginChatUser();
+        ChatUser chatUser = onlineChatInitialization.getLoginChatUser();
         if (chatUser == null) {
             return new ReturnInfo(SystemEnum.NOT_LOGIN.getKey(), "当前用户未登录或者登录过期！");
         }
@@ -138,7 +138,7 @@ public class FriendManagerService {
      * @return 返回创建结果
      */
     public ReturnInfo createFriendGroup(String friendGroupName, int friendGroupOrder) {
-        ChatUser chatUser = userLoginAuthService.getLoginChatUser();
+        ChatUser chatUser = onlineChatInitialization.getLoginChatUser();
         if (chatUser == null) {
             return new ReturnInfo(SystemEnum.NOT_LOGIN.getKey(), "当前用户未登录或者登录过期！");
         }
@@ -158,7 +158,7 @@ public class FriendManagerService {
      * @return 返回删除的结果
      */
     public ReturnInfo deleteFriend(String friendId) {
-        ChatUser chatUser = userLoginAuthService.getLoginChatUser();
+        ChatUser chatUser = onlineChatInitialization.getLoginChatUser();
         if (chatUser == null) {
             return new ReturnInfo(SystemEnum.NOT_LOGIN.getKey(), "当前用户未登录或者登录过期！");
         }
@@ -190,7 +190,7 @@ public class FriendManagerService {
      * @return
      */
     public ReturnInfo verifyFriend(String applyFriendId, String friendGroupId, String applyState) {
-        ChatUser chatUser = userLoginAuthService.getLoginChatUser();
+        ChatUser chatUser = onlineChatInitialization.getLoginChatUser();
         if (chatUser == null) {
             return new ReturnInfo(SystemEnum.NOT_LOGIN.getKey(), "当前用户未登录或者登录过期！");
         }
@@ -251,7 +251,7 @@ public class FriendManagerService {
      * @return 返回申请结果
      */
     public ReturnInfo applyFriend(String userId, String note, String friendGroupId, String remark) {
-        ChatUser chatUser = userLoginAuthService.getLoginChatUser();
+        ChatUser chatUser = onlineChatInitialization.getLoginChatUser();
         if (chatUser == null) {
             return new ReturnInfo(SystemEnum.NOT_LOGIN.getKey(), "当前用户未登录或者登录过期！");
         }
@@ -321,7 +321,7 @@ public class FriendManagerService {
      * @return 我的好友列表的数据
      */
     public ReturnInfo myFriendList() {
-        ChatUser chatUser = userLoginAuthService.getLoginChatUser();
+        ChatUser chatUser = onlineChatInitialization.getLoginChatUser();
         if (chatUser == null) {
             return new ReturnInfo(SystemEnum.NOT_LOGIN.getKey(), "当前用户未登录或者登录过期！");
         }

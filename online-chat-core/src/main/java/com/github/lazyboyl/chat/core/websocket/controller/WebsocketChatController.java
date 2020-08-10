@@ -4,6 +4,7 @@ import com.github.lazyboyl.chat.core.entity.ReturnInfo;
 import com.github.lazyboyl.chat.core.service.WebsocketChatService;
 import com.github.lazyboyl.websocket.annotation.WebSocketController;
 import com.github.lazyboyl.websocket.annotation.WebSocketRequestMapping;
+import com.github.lazyboyl.websocket.annotation.WebSocketRequestParam;
 import io.netty.channel.ChannelHandlerContext;
 import org.springframework.beans.factory.annotation.Autowired;
 
@@ -30,7 +31,11 @@ public class WebsocketChatController {
      * @return 返回发送结果
      */
     @WebSocketRequestMapping("sendGroupMessage")
-    public ReturnInfo sendGroupMessage(String token, ChannelHandlerContext ctx, String groupId, String uniqueNo, String messageContent) {
+    public ReturnInfo sendGroupMessage(@WebSocketRequestParam(name = "token") String token,
+                                       @WebSocketRequestParam(name = "ctx") ChannelHandlerContext ctx,
+                                       @WebSocketRequestParam(name = "groupId") String groupId,
+                                       @WebSocketRequestParam(name = "uniqueNo")String uniqueNo,
+                                       @WebSocketRequestParam(name = "messageContent")String messageContent) {
         return websocketChatService.sendGroupMessage(token, ctx, groupId, uniqueNo, messageContent);
     }
 
@@ -45,7 +50,11 @@ public class WebsocketChatController {
      * @param messageContent 聊天的消息
      */
     @WebSocketRequestMapping("sendMessage")
-    public ReturnInfo sendMessage(String token, ChannelHandlerContext ctx, String receiveUserId, String uniqueNo, String messageContent) {
+    public ReturnInfo sendMessage(@WebSocketRequestParam(name = "token")String token,
+                                  @WebSocketRequestParam(name = "ctx") ChannelHandlerContext ctx,
+                                  @WebSocketRequestParam(name = "receiveUserId")String receiveUserId,
+                                  @WebSocketRequestParam(name = "uniqueNo")String uniqueNo,
+                                  @WebSocketRequestParam(name = "messageContent")String messageContent) {
         return websocketChatService.sendMessage(token, ctx, receiveUserId, uniqueNo, messageContent);
     }
 
@@ -56,7 +65,7 @@ public class WebsocketChatController {
      * @param ctx   当前连接的socket的对象
      */
     @WebSocketRequestMapping("login")
-    public void login(String token, ChannelHandlerContext ctx) {
+    public void login(@WebSocketRequestParam(name = "token") String token, @WebSocketRequestParam(name = "ctx")ChannelHandlerContext ctx) {
         websocketChatService.login(token, ctx);
     }
 

@@ -7,7 +7,7 @@ import com.github.lazyboyl.chat.core.entity.ChatUser;
  * @since 2020/8/4
  * 类描述：
  */
-public interface UserLoginAuthService {
+public interface OnlineChatInitialization {
 
     /**
      * 功能描述： 获取当前登录的用户信息
