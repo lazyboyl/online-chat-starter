@@ -26,6 +26,11 @@
     </collection>
   </resultMap>
 
+  <!-- 获取当前的我的好友分组的排序的最大的值 -->
+  <select id="getMaxFriendGroupOrder" resultType="java.lang.Integer">
+    select max(friendGroupOrder) from c_friend_group where crtUserId = #{crtUserId}
+  </select>
+
   <!-- 获取我的好友的分组列表的数据 -->
   <select id="getFriendGroupList" resultMap="BaseResultMap">
     select * from c_friend_group where crtUserId = #{crtUserId}
@@ -33,7 +38,7 @@
 
   <!-- 获取我的好友列表 -->
   <select id="myFriendList" resultMap="MyFriendListMap">
-    select cfg.*,cf.* from c_friend_group cfg inner join c_friend cf on cfg.friendGroupId = cf.friendGroupId where cfg.crtUserId = #{crtUserId}
+    select cfg.*,cf.* from c_friend_group cfg left join c_friend cf on cfg.friendGroupId = cf.friendGroupId where cfg.crtUserId = #{crtUserId}
   </select>
 
 </mapper>

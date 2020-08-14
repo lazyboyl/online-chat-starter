@@ -115,29 +115,25 @@ public class FriendManagerService {
      * 功能描述： 删除好友分组的时候实现分组底下好友的数据的迁移
      *
      * @param friendGroupId       待删除的好友分组
-     * @param targetFriendGroupId 待迁移的好友的分组数据
      * @return 返回删除操作结果
      */
-    public ReturnInfo deleteFriendGroup(String friendGroupId, String targetFriendGroupId) {
+    public ReturnInfo deleteFriendGroup(String friendGroupId) {
         ChatUser chatUser = onlineChatInitialization.getLoginChatUser();
         if (chatUser == null) {
             return new ReturnInfo(SystemEnum.NOT_LOGIN.getKey(), "当前用户未登录或者登录过期！");
         }
         friendGroupDao.deleteByPrimaryKey(friendGroupId);
-        if (!"".equals(targetFriendGroupId)) {
-            friendDao.transferFriendGroup(targetFriendGroupId, friendGroupId, chatUser.getUserId());
-        }
+        friendDao.transferFriendGroup(chatUser.getDefaultGroupId(), friendGroupId, chatUser.getUserId());
         return new ReturnInfo(SystemEnum.SUCCESS.getKey(), "删除好友分组成功！");
     }
 
     /**
      * 功能描述： 创建分组
      *
-     * @param friendGroupName  分组名称
-     * @param friendGroupOrder 分组顺序
+     * @param friendGroupName 分组名称
      * @return 返回创建结果
      */
-    public ReturnInfo createFriendGroup(String friendGroupName, int friendGroupOrder) {
+    public ReturnInfo createFriendGroup(String friendGroupName) {
         ChatUser chatUser = onlineChatInitialization.getLoginChatUser();
         if (chatUser == null) {
             return new ReturnInfo(SystemEnum.NOT_LOGIN.getKey(), "当前用户未登录或者登录过期！");
@@ -145,10 +141,10 @@ public class FriendManagerService {
         FriendGroup friendGroup = new FriendGroup();
         friendGroup.setAllowDeletion(AllowDeletionEnum.ALLOW_DELETE.getAllowDeletion());
         friendGroup.setFriendGroupName(friendGroupName);
-        friendGroup.setFriendGroupOrder(friendGroupOrder);
+        friendGroup.setFriendGroupOrder(friendGroupDao.getMaxFriendGroupOrder(chatUser.getUserId()) + 1);
         friendGroup.setCrtUserId(chatUser.getUserId());
         friendGroupDao.insertSelective(friendGroup);
-        return new ReturnInfo(SystemEnum.SUCCESS.getKey(), "创建好友分组成功！");
+        return new ReturnInfo(SystemEnum.SUCCESS.getKey(), "创建好友分组成功！", friendGroup);
     }
 
     /**

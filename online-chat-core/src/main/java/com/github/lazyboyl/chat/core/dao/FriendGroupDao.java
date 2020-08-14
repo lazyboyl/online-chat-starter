@@ -15,6 +15,14 @@ import java.util.List;
 public interface FriendGroupDao extends Mapper<FriendGroup> {
 
     /**
+     * 功能描述： 获取当前的我的好友分组的排序的最大的值
+     *
+     * @param crtUserId 创建人流水ID
+     * @return 返回查询结果
+     */
+    int getMaxFriendGroupOrder(@Param("crtUserId") String crtUserId);
+
+    /**
      * 功能描述： 获取我的好友分组列表数据
      *
      * @param crtUserId 创建人流水ID

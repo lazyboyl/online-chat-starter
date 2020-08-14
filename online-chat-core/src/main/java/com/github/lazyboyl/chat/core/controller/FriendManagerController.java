@@ -62,13 +62,11 @@ public class FriendManagerController {
      * 功能描述： 删除好友分组的时候实现分组底下好友的数据的迁移
      *
      * @param friendGroupId       待删除的好友分组
-     * @param targetFriendGroupId 待迁移的好友的分组数据
      * @return 返回删除操作结果
      */
     @PostMapping("deleteFriendGroup")
-    public ReturnInfo deleteFriendGroup(@RequestParam(name = "friendGroupId") String friendGroupId,
-                                        @RequestParam(name = "targetFriendGroupId") String targetFriendGroupId) {
-        return friendManagerService.deleteFriendGroup(friendGroupId, targetFriendGroupId);
+    public ReturnInfo deleteFriendGroup(@RequestParam(name = "friendGroupId") String friendGroupId) {
+        return friendManagerService.deleteFriendGroup(friendGroupId);
     }
 
 
@@ -76,13 +74,11 @@ public class FriendManagerController {
      * 功能描述： 创建分组
      *
      * @param friendGroupName  分组名称
-     * @param friendGroupOrder 分组顺序
      * @return 返回创建结果
      */
     @PostMapping("createFriendGroup")
-    public ReturnInfo createFriendGroup(@RequestParam(name = "friendGroupName") String friendGroupName,
-                                        @RequestParam(name = "friendGroupOrder") int friendGroupOrder) {
-        return friendManagerService.createFriendGroup(friendGroupName, friendGroupOrder);
+    public ReturnInfo createFriendGroup(@RequestParam(name = "friendGroupName") String friendGroupName) {
+        return friendManagerService.createFriendGroup(friendGroupName);
     }
 
     /**
